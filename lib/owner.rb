@@ -1,91 +1,54 @@
-class Owner
- attr_accessor :pets, :name
- attr_reader :species 
- @@all = []
- 
- def initialize(species)
-   @species = species
-   @@all << self
-   @pets = {fishes: [], cats: [], dogs: []}
-  end
-
- def say_species
-    return "I am a #{@species}."
-  end
-    
-  def buy_fish(name_of_fish)
-    @pets[:fishes] << Fish.new(name_of_fish)
-  end
-
-  def buy_dog(name_of_dog)
-    @pets[:dogs] << Dog.new(name_of_dog)
-  end
-
-  def buy_cat(name_of_cat)
-    @pets[:cats] << Cat.new(name_of_cat)
-  end
+class Owner 
   
-  def self.all
+ attr_accessor :pets, :name
+end 	  attr_reader :species
+  
+  @@all = []
+   def initialize(species)
+    @species = species
+    @@all << self
+    @pets = { :fishes => [], :dogs => [], :cats => [] }
+  end
+   def self.all
     @@all
   end
-
-  def self.reset_all
+   def self.reset_all
     @@all.clear
   end
-
-  def self.count
+   def self.count 
     @@all.size
   end
-end
-
- def buy_fish(name_of_fish)
-    @pets[:fishes] << Fish.new(name_of_fish)
+   def say_species
+    "I am a #{species}."
   end
-
-  def buy_dog(name_of_dog)
-    @pets[:dogs] << Dog.new(name_of_dog)
+   def buy_fish(name)
+    fish = Fish.new(name)
+    pets[:fishes] << fish
   end
-
-  def buy_cat(name_of_cat)
-    @pets[:cats] << Cat.new(name_of_cat)
+   def buy_cat(name)
+    cat = Cat.new(name)
+    pets[:cats] << cat
   end
-
-  def walk_dogs(dog)
+   def buy_dog(name)
+    dog = Dog.new(name)
+    pets[:dogs] << dog
+  end
+   def walk_dogs
     pets[:dogs].map {|dog| dog.mood = "happy"}
-  end 
-
-  def play_with_cats
-    @pets.collect do |species, instances|
-      if species == :cats
-        instances.each do |cat|
-          cat.mood = "happy"
-        end
-      end
+   end
+   def play_with_cats
+    pets[:cats].map {|cat| cat.mood = "happy"}
+  end
+   def feed_fish
+    pets[:fishes].map {|fish| fish.mood = "happy"}
+  end
+   def sell_pets
+    pets.each do |type, pets|
+      pets.map {|pet| pet.mood = "nervous"}
     end
+    pets.clear
   end
-
-  def feed_fish
-    @pets.collect do |species, instances|
-      if species == :fishes
-        instances.each do |fish|
-          fish.mood = "happy"
-        end
-      end
-    end
+   def list_pets
+    "I have #{pets[:fishes].size} fish, #{pets[:dogs].size} dog(s), and #{pets[:cats].size} cat(s)."
   end
-
-  def sell_pets
-    @pets.collect do |species, instances|
-      instances.each do |pet|
-        pet.mood = "nervous"
-      end
-      instances.clear
-    end
-  end
-
-  def list_pets
-    num_dogs = @pets[:dogs].size
-    num_cats = @pets[:cats].size
-    num_fish = @pets[:fishes].size
-    return "I have #{num_fish} fish, #{num_dogs} dog(s), and #{num_cats} cat(s)."
-  end
+ end
