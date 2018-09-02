@@ -50,7 +50,7 @@ end
     @pets[:cats] << Cat.new(name_of_cat)
   end
 
-  def walk_dogs
+  def walk_dogs(dog)
     pets[:dogs].map {|dog| dog.mood = "happy"}
   end 
 
